@@ -1,0 +1,15 @@
+.idea
+/logs/*
+/apidoc*
+/apidoc/
+/apidoc-member/
+/apidoc241/
+*.iml
+*.rdb
+/target/
+/MISS.Interface.MemberCenter.API/target/
+/MISS.Interface.MemberCenter/target/
+/MISS.Interface.MemberCenter/logs
+/MISS.Interface.MemberCenter/apidoc-*
+.DS_Store
+*.kotlin_module
