@@ -13,3 +13,6 @@
 /MISS.Interface.MemberCenter/apidoc-*
 .DS_Store
 *.kotlin_module
+*.classpath
+*.project
+*.settings/
