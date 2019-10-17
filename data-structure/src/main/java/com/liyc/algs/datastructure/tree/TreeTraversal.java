@@ -1,8 +1,11 @@
-package com.liyc.algs.pata;
+package com.liyc.algs.datastructure.tree;
 
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
+/**
+ * 树遍历
+ */
 public class TreeTraversal {
     public static void main(String[] args) {
         Node root = new Node(1);
