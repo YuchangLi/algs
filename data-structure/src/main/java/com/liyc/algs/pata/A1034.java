@@ -13,21 +13,20 @@ public class A1034 {
 	private static int[] v;
 	private static int[] w;
 	private static int threthold;
-	private static int maxpersons = 90;
+	private static int personsN;
 	public static void main(String[] args) throws IOException {
-		long s = System.currentTimeMillis();
+//		long s = System.currentTimeMillis();
 		BufferedReader bf=new BufferedReader(new InputStreamReader(System.in));
 		String line1 = bf.readLine();
 		String[] line1as = line1.split(" ");
 		int totalcalls = Integer.valueOf(line1as[0]);
 		threthold = Integer.valueOf(line1as[1]);
-		maxpersons = totalcalls * 2;
+		int maxpersons = totalcalls * 2;
 		int index = 0;
 		Map<Integer, String> persons = new HashMap<>(maxpersons);
 		g = new int[maxpersons][maxpersons];
 		v = new int[maxpersons];
 		w = new int[maxpersons];
-
 
 		for (int k = 0; k < totalcalls; k++) {
 			String[] lines = bf.readLine().split(" ");
@@ -54,8 +53,9 @@ public class A1034 {
 			w[i] = w[i] + time;
 		}
 		bf.close();
+		personsN = persons.size();
 		Set<Set<Integer>> subg = new HashSet<>();
-		for (int i = 0; i < persons.size(); i++) {
+		for (int i = 0; i < personsN; i++) {
 			if( v[i] > 0){
 				continue;
 			}
@@ -86,14 +86,14 @@ public class A1034 {
 		}
 		System.out.println(count);
 		if(count==0){
-			System.out.println(System.currentTimeMillis()-s);
+//			System.out.println(System.currentTimeMillis()-s);
 			return;
 		}
 		ps.forEach((k, v)->{
 			String name = persons.get(k);
 			System.out.println(name+" "+ps.get(k));
 		});
-		System.out.println(System.currentTimeMillis()-s);
+//		System.out.println(System.currentTimeMillis()-s);
 	}
 
 	private static int getKeyFromValue(Map<Integer, String> persons, String name1) {
@@ -109,7 +109,7 @@ public class A1034 {
 	private static void dfs(int i, Set<Integer> list) {
 		v[i] = 1;
 		list.add(i);
-		for (int j = 0; j < maxpersons; j++) {
+		for (int j = 0; j < personsN; j++) {
 			if(g[i][j] == 0){
 				continue;
 			}
