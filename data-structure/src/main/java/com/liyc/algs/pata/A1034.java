@@ -13,7 +13,7 @@ public class A1034 {
 	private static int[] v;
 	private static int[] w;
 	private static int threthold;
-	private static int maxpersons = 90;
+	private static int maxpersons;
 	public static void main(String[] args) throws IOException {
 		long s = System.currentTimeMillis();
 		BufferedReader bf=new BufferedReader(new InputStreamReader(System.in));
@@ -27,7 +27,6 @@ public class A1034 {
 		g = new int[maxpersons][maxpersons];
 		v = new int[maxpersons];
 		w = new int[maxpersons];
-
 
 		for (int k = 0; k < totalcalls; k++) {
 			String[] lines = bf.readLine().split(" ");
@@ -54,46 +53,28 @@ public class A1034 {
 			w[i] = w[i] + time;
 		}
 		bf.close();
-		Set<Set<Integer>> subg = new HashSet<>();
+		Map<Integer, Integer> ps = new TreeMap<>(Comparator.comparing(persons::get));
 		for (int i = 0; i < persons.size(); i++) {
 			if( v[i] > 0){
 				continue;
 			}
 			Set<Integer> set = new HashSet<>(maxpersons);
-			subg.add(set);
-			dfs(i, set);
+			int[] as = new int[3];
+			as[0] = -1;
+			dfs(i, as);
+			if(as[1] > 2 && as[2]/2 > threthold){
+				ps.put(as[0], as[1]);
+			}
 		}
-		int count = 0;
-		Map<Integer, Integer> ps = new TreeMap<>(Comparator.comparing(persons::get));
-		for (Set<Integer> set : subg){
-			if(set.size() <= 2){
-				continue;
-			}
-			int max = -1;
-			int sum = 0;
-			for (int i : set) {
-				int iw = w[i];
-				sum += iw;
-				if (max == -1 || iw > w[max]) {
-					max = i;
-				}
-			}
-			if( sum /2 <= threthold) {
-				continue;
-			}
-			count++;
-			ps.put(max, set.size());
-		}
+		int count = ps.size();
 		System.out.println(count);
 		if(count==0){
-			System.out.println(System.currentTimeMillis()-s);
 			return;
 		}
 		ps.forEach((k, v)->{
 			String name = persons.get(k);
 			System.out.println(name+" "+ps.get(k));
 		});
-		System.out.println(System.currentTimeMillis()-s);
 	}
 
 	private static int getKeyFromValue(Map<Integer, String> persons, String name1) {
@@ -106,9 +87,13 @@ public class A1034 {
 		return 0;
 	}
 
-	private static void dfs(int i, Set<Integer> list) {
+	private static void dfs(int i, int[] as) {
 		v[i] = 1;
-		list.add(i);
+		if(as[0] == -1 || w[i] > w[as[0]]) {
+			as[0] = i;
+		}
+		as[1] += 1;
+		as[2] += w[i];
 		for (int j = 0; j < maxpersons; j++) {
 			if(g[i][j] == 0){
 				continue;
@@ -116,7 +101,7 @@ public class A1034 {
 			if(v[j] > 0) {
 				continue;
 			}
-			dfs(j, list);
+			dfs(j, as);
 		}
 	}
 }
