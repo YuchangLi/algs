@@ -7,7 +7,7 @@ import java.util.*;
 import java.util.concurrent.LinkedBlockingQueue;
 
 /**
- * 构建Map<index, name>, 构建g[name1][name2]
+ * BFS搜索每一层
  */
 public class A1076 {
 	// 图
