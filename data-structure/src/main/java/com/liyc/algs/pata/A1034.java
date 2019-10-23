@@ -6,16 +6,21 @@ import java.io.InputStreamReader;
 import java.util.*;
 
 /**
- * 构建Map<index, name>, 构建g[name1][name2]
+ * 构建Map<index, name>, 构建图g[name1][name2]
+ * DFS遍历图，找出所有联通子图，然后子图的边权总和。
  */
 public class A1034 {
+	// 图
 	private static int[][] g;
+	// 顶点是否已访问过
 	private static int[] v;
+	// 顶点权重
 	private static int[] w;
+	// 阀值
 	private static int threthold;
+	// 总人数
 	private static int personsN;
 	public static void main(String[] args) throws IOException {
-//		long s = System.currentTimeMillis();
 		BufferedReader bf=new BufferedReader(new InputStreamReader(System.in));
 		String line1 = bf.readLine();
 		String[] line1as = line1.split(" ");
@@ -27,7 +32,7 @@ public class A1034 {
 		g = new int[maxpersons][maxpersons];
 		v = new int[maxpersons];
 		w = new int[maxpersons];
-
+		// 构建图
 		for (int k = 0; k < totalcalls; k++) {
 			String[] lines = bf.readLine().split(" ");
 			String name1 = lines[0];
@@ -54,7 +59,9 @@ public class A1034 {
 		}
 		bf.close();
 		personsN = persons.size();
+		// 保存各个联通子图
 		Set<Set<Integer>> subg = new HashSet<>();
+		// 遍历图
 		for (int i = 0; i < personsN; i++) {
 			if( v[i] > 0){
 				continue;
@@ -65,6 +72,7 @@ public class A1034 {
 		}
 		int count = 0;
 		Map<Integer, Integer> ps = new TreeMap<>(Comparator.comparing(persons::get));
+		// 遍历各子图判断，存入ps
 		for (Set<Integer> set : subg){
 			if(set.size() <= 2){
 				continue;
@@ -86,14 +94,12 @@ public class A1034 {
 		}
 		System.out.println(count);
 		if(count==0){
-//			System.out.println(System.currentTimeMillis()-s);
 			return;
 		}
 		ps.forEach((k, v)->{
 			String name = persons.get(k);
 			System.out.println(name+" "+ps.get(k));
 		});
-//		System.out.println(System.currentTimeMillis()-s);
 	}
 
 	private static int getKeyFromValue(Map<Integer, String> persons, String name1) {
@@ -120,3 +126,4 @@ public class A1034 {
 		}
 	}
 }
+
